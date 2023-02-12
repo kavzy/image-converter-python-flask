@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Image Converter</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #F2F2F2;
+            }
+             h1 {
+                text-align: center;
+                margin: 50px 0;
+                font-weight: normal;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                font-size: 50px;
+                background-color: #FFFF00;
+                padding: 10px;
+            }
+            .content ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .content li {
+                background-color: #FFF;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                width: 200px;
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.2s ease-in-out;
+            }
+            .content li a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                font-size: 20px;
+                transition: all 0.2s ease-in-out;
+            }
+            .content li:hover {
+                transform: translateY(-10px);
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            }
+            .content li:hover a {
+                color: #00BFFF;
+            }
+            .content .jpg-to-png {
+                background-color: #E74C3C;
+            }
+            .content .png-to-jpg {
+                background-color: #16A085;
+            }
+            .content  .webp-to-png {
+                background-color: #F1C40F;
+            }
+            .content .bmp-to-png {
+                background-color: #2980B9;
+            }
+            .content .png-to-pdf {
+                background-color: #9B59B6;
+            }
+
+            .navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+            @media only screen and (max-width: 600px) {
+            li {
+                width: 100%;
+                height: auto;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="/">Home</a>
+            <div class="dropdown">
+              <button class="dropbtn">Tools 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="/jpgtopng">JPG to PNG</a>
+                <a href="/pngtojpg">PNG to JPG</a>
+                <a href="/webptopng">WEBP to PNG</a>
+                <a href="/bmptopng">BMP to PNG</a>
+                <a href="/pngtopdf">PNG to PDF</a>
+              </div>
+            </div> 
+          </div>
+     
+        <div class="content">
+            <h1>Image Converter</h1>
+            <ul>
+                <li class="jpg-to-png"><a href="/jpgtopng">JPG to PNG converter</a></li>
+                <li class="png-to-jpg"><a href="/pngtojpg">PNG to JPG converter</a></li>
+                <li class="webp-to-png"><a href="/webptopng">WEBP to PNG converter</a></li>
+                <li class="bmp-to-png"><a href="/bmptopng">BMP to PNG converter</a></li>
+                <li class="png-to-pdf"><a href="/pngtopdf">PNG to PDF converter</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

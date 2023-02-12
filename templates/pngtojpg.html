@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PNG to JPG Converter</title>
+        <style>
+            body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 36px;
+    color: #333;
+    text-shadow: 1px 1px 2px #BBB;
+}
+
+form {
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #BBB;
+    margin: 0 auto;
+    width: 500px;
+    padding: 50px;
+    text-align: center;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    font-size: 16px;
+    width: 80%;
+    transition: all 0.3s ease;
+}
+
+input[type="file"]:focus {
+    border: 1px solid #4CAF50;
+    box-shadow: 0px 0px 5px #4CAF50;
+}
+
+input[type="button"] {
+    background-color: #4CAF50;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="button"]:hover {
+    background-color: #3E8E41;
+}
+
+#previewImage {
+    margin-top: 20px;
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    display: none;
+}
+
+#previewImage {
+    margin-top: 20px;
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    background-image: url('https://iili.io/HEN7CI1.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: none;
+    text-align: center;
+}
+
+#previewImage.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function validateForm() {
+                var fileInput = document.getElementById("fileInput").files[0];
+                if (!fileInput) {
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: 'Please Select Image!',
+                    })
+                    return false;
+                }
+                if (fileInput.size > 5000000) {
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: 'Image size is too large. Please select an image less than 5 MB.',
+                    })
+                    return false;
+                }
+                if (!fileInput.name.endsWith(".png")) {
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: 'Invalid file format. Please select a PNG image.',
+                    })
+                    return false;
+                }
+                return true;
+            }
+
+            function submitForm() {
+                if (!validateForm()) {
+                    return;
+                }
+                var formData = new FormData();
+                formData.append("image", document.getElementById("fileInput").files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/pngtojpg", true);
+                xhr.responseType = 'blob';
+                xhr.onload = function(e) {
+                    if (this.status === 200) {
+                    var blob = new Blob([this.response], { type: 'image/jpg' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "converted.jpg";
+                    link.click();
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: 'Invalid file format. Please select a PNG image.',
+                            })
+                    }
+                };
+                xhr.send(formData);
+            }
+
+            function showSelectedImage() {
+                var fileInput = document.getElementById("fileInput").files[0];
+                var previewImage = document.getElementById("previewImage");
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = "block";
+                };
+                reader.readAsDataURL(fileInput);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="/">Home</a>
+            <div class="dropdown">
+              <button class="dropbtn">Tools 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="/jpgtopng">JPG to PNG</a>
+                <a href="/pngtojpg">PNG to JPG</a>
+                <a href="/webptopng">WEBP to PNG</a>
+                <a href="/bmptopng">BMP to PNG</a>
+                <a href="/pngtopdf">PNG to PDF</a>
+              </div>
+            </div> 
+          </div>
+        <h1>PNG to JPG Converter</h1>
+        <form>
+            <input type="file" id="fileInput" accept=".png" onchange="showSelectedImage()">
+            <br><br>
+            <input type="button" value="Convert to JPG" onclick="submitForm()">
+            <br><br>
+            <img id="previewImage"  class="center">
+        </form>
+    </body>
+</html>
