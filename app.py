@@ -40,7 +40,7 @@ def jpg_to_png2():
     if not image:
         return "No image provided", 400
     
-    # Open the image and check if it's in JPG format
+    # Open the image and check if it's in JPG formatgg
     try:
         image = Image.open(image)
     except:
